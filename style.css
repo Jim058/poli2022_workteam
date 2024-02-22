@@ -14,19 +14,35 @@ a {
     text-decoration:none;
 }
 html {
-    max-width: 100%;
-    max-height: 900px;
+    max-width: 1200px;
+    margin: 0 auto;
     background-color: #041935;
 }
 
+body {
+    width: 100%;
+    
+}
+
+.BG {
+    max-width: 1200px;
+    width: 100%;
+    height: 2150px;
+    position: absolute;
+    top: -200px;
+    z-index: -1;
+    background-image: url(./bg.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    
+}
 .navs {
-    margin: 0 auto;
-    height: 100px;
+    margin: 15px auto;
+    height: 70px;
     width: 70%;
-    background-color: #00BFF5;
+    background-color: linear-gradient(to top,rgba(34,56,101,1),rgba(22,15,132,0));
     display: flex;
     justify-content: space-between;
-    
     margin-bottom: 20px;
 }
 
@@ -41,14 +57,16 @@ html {
 }
 
 .nav ul {
+    margin-right: 1.5%;
     display: flex;
-    height: 100%;
+    float: right;
+    height: 50px;
+    width: 55%;
 }
 
 .nav li {
     width: 30%;
-    line-height: 100px;
-    
+    line-height: 50px;
     text-align: center;
     transition: ease-out 0.3s;
     cursor: pointer;
@@ -56,7 +74,7 @@ html {
 
 .nav a {
     width: 100%;
-    font-size: 1.5em;
+    font-size: 1.1em;
     font-weight: 500;
     color: #eee;
 }
@@ -69,7 +87,6 @@ html {
 
 .nav-active {
     background-color: #34a6c5;
-    
 }
 /*
 @media(max-width:800px){
@@ -101,7 +118,8 @@ html {
     width: 70%;
     height: 800px;
     margin: 0 auto;
-    background-image: url(./bg.png);
+    /*background-image: url(./bg.png);*/
+    /*background-color: #ddd;*/
     background-position: top;
     background-repeat: no-repeat;
     background-size: 100% ;
@@ -169,10 +187,11 @@ html {
 
 .selection {
     margin:  0 auto;
-    padding-top: 35px;
+    margin-top: 200px;
     width: 50%;
     display: flex;
     justify-content: space-between;
+    line-height: 50%;
 }
 
 .selection div {
@@ -187,7 +206,7 @@ html {
     width: 80%;
     height: 60px;
     position: relative;
-    margin: 0 auto;
+    margin: 15px auto;
     border-radius: 35px;
     border: 2px solid #fff;
     cursor: pointer;
@@ -213,7 +232,7 @@ html {
     width: 85%;
     position: absolute;
     z-index: 3;
-    top: 50%;
+    top: -100px;
     left: 8%;
     background-color: #fff;
     border-radius: 20px;
@@ -223,17 +242,18 @@ html {
 
 .back{
     position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 80px;
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
     background-color: #00BFF5 ;
-    left: -50px;
+    left: 15px;
     transition: 0.5s ease;
-    line-height: 80px;
+    line-height: 40px;
     text-align: center;
     font-family: 'Noto Sans TC' ;
     color: #eee;
-    font-size: 2.3em;
+    font-size: 1.3em;
     font-weight: 700;
     cursor: pointer;
 
@@ -255,8 +275,8 @@ html {
 .loginFrame input {
     display: block;
     position: relative;
-    margin: 5px auto;
-    width: 30%;
+    margin: 15px auto;
+    width: 50%;
     height: 30px;
     border-radius: 8px;
     border: 1px solid  #444;
@@ -268,8 +288,7 @@ html {
 
 .loginFrame .back {
     padding: 5px;
-    top: 230px;
-    height: 80px;
+    top: 180px;
 }
 
 /*註冊視窗-----------*/
@@ -283,7 +302,7 @@ html {
 }
 
 .back:hover {
-    left: 10px;
+    left: -5px;
 }
 
 .back:active {
@@ -394,15 +413,27 @@ html {
     }
     
 }
+@media (width>800px )and ( width<1200px) {
+    .loginFrame h1 {
+        width: 80%;
+    }
 
-@media(max-width:800px){
+    .loginFrame input {
+        width: 60%;
+    }
+
+    .loginFrame .btn-send {
+        width: 40%;
+    }
+}
+@media(width < 800px){
     .navs {
         width: 100%;
     }
 
     .nav a {
         font-size: 0.8em;
-        line-height: 80px;
+        line-height: .8em;
     }
 
     .container {
@@ -410,9 +441,10 @@ html {
     }
 
     .selection {
-        width: 95%;
+        width: 45%;
+        font-size: .9em;
         position: relative;
-        margin: 0 auto;
+        margin: 25px auto;
         display: block;
     }
 
@@ -425,6 +457,13 @@ html {
     }
 
 
+
+    .user .loginFrame ,.user .signup {
+        top: 60px;
+        width: 60%;
+        margin: 0 auto;
+        left: 25%;
+    }
     .loginFrame .back {
         width: 10%;
         height: 8vw;
@@ -444,9 +483,9 @@ html {
     }
 
     .signup h1,.loginFrame h1 {
-        width: 80%;
+        width: 60%;
         border-radius: 45px;
-        font-size: 1.2em;
+        font-size: 1.4em;
     }
 
     .userInsert {

@@ -142,11 +142,10 @@ function creatAccount() {
     let name = document.querySelector('.userInsert > div > .Name')
     let tel = document.querySelector('.userInsert > div > .Tel-Num')
     let car = 0
-    if(name.value == '' && tel.value == ''){
+    if(name == '' && tel == ''){
         alert('請勿空白')
-        return
-        
-    } else {
+        return 0
+    }
     let carChecked =Array.from(document.querySelectorAll('.userInsert > div > input')) 
     console.log(carChecked)
     if(carChecked[2].checked == true) {
@@ -167,7 +166,7 @@ function creatAccount() {
     tel.value = ''
     console.log(name.value+'**'+tel.value)
     car = 0
-    }
+    
 }
 
 
@@ -178,7 +177,10 @@ function activeCheck(){
     let list = Array.from(document.querySelectorAll('.news-list > ul > li'))
     let link = document.createElement('a')
     let unJoin = document.createElement('div')
-    
+    if(userdate[2] !== ''){
+        
+        return 0
+    }
     /*逐一檢查未參加的活動 */
     for(let i=0;i<newsData.length;i++){
         if(newsData[i].title !== arrUserActive[i]){
@@ -201,15 +203,14 @@ function activeCheck(){
 
 
 const sendOutList = Array.from(document.querySelectorAll('.btn-send'))
-console.log("送出"+sendOutList)
+
 sendOutList.forEach((sendOut) => {
     sendOut.addEventListener('click',function(){
         let index = sendOutList.indexOf(this)
-        
+        console.log(index)
 
         /*---------等於0表示登入-----------------------------------------------------------*/
         if(index == 0) {
-            console.log('登入')
             /* 加載資料並解密對照 */
             let name = document.querySelector('.loginInsert > div > .Name').value
             let tel = document.querySelector('.loginInsert > div > .Tel-Num').value
@@ -237,17 +238,7 @@ sendOutList.forEach((sendOut) => {
             })
 
             return 0
-        } else {
-            console.log('註冊')
-            /*  送出申請資料  */
-            if(userdate[2] !== ''){
-        
-                return 0
-            } else {
-                alert('註冊成功 請重新登入')
-            }
-            
-        }
+        } 
         
         /* ---------------------------------------創建帳號----------------------------------------- */
 
@@ -255,7 +246,7 @@ sendOutList.forEach((sendOut) => {
         creatAccount()
         
 
-        
+        alert('註冊成功 請重新登入')
         unLogin.classList.remove('hidden-this')
         signUp.classList.add('hidden-this')
         logIn.classList.add('hidden-this')

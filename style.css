@@ -554,6 +554,37 @@ body {
     border-radius: 15px;
 }
 
+.myEven {
+    width: 80%;
+    padding: 0.5px 2.5% ;
+    position: relative;
+    top: 50px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 5px;
+    
+}
+
+.myEven li:not(h1) {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    margin: 2px 0;
+    
+}
+
+.myEven h1, .myEven li:hover{
+    padding: 0 2.4%;
+    background-color: #00BFF5;
+    color:#fff;
+    border-radius: 3.5px;
+    
+}
+
+.myEven h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
 /*----------------我的檔案-------------*/
 .profile {
     margin: 0 auto;

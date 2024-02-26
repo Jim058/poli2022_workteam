@@ -1,39 +1,27 @@
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-analytics.js";
-import { getDatabase, ref, get, child, set, update} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-
-
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyBvG8iF9nRehbzok60o3qtBQE62MMreIvQ",
-    authDomain: "poli-party.firebaseapp.com",
-    databaseURL: "https://poli-party-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "poli-party",
-    storageBucket: "poli-party.appspot.com",
-    messagingSenderId: "719643029744",
-    appId: "1:719643029744:web:629f26d8873c972ca01235",
-    measurementId: "G-5DRQMV9XGY"
-};
-
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-//import {get, ref, set, child, update, remove} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-const db = getDatabase();
-const dbref = ref(db)
 let newsData
-let news_list = document.querySelector('.news-list ul ')
+let userCookie = []
 
+//用戶資料
+let userDate = [
+    {'userName':'admin',
+    'tel':'admin',
+    'car':true,
+    'even':[0,1]},
+    {'userName':'user',
+    'tel':'user',
+    'car':true,
+    'even':[0]}]
+    
+
+let poliEven = [
+    '2023/01/30 16:00 逐鹿炭烤','2023/02/28 19:00 輕井澤火鍋'
+]
+
+
+
+let news_list = document.querySelector('.news-list ul ')
+/*
 get (child(dbref,'NO/')).then((snapshot)=> {
     if(snapshot.exists()) {
         newsData = Object.values(snapshot.val())
@@ -52,7 +40,8 @@ get (child(dbref,'NO/')).then((snapshot)=> {
         console.error(error);
 
         
-})
+})*/
+
 /*新聞列-------------------*/
 
 
@@ -82,12 +71,14 @@ parseCookie() */
 /*----------------------------------------註冊----------------------- */
 /*-------------------------宣告--------------------------------------------------------------------- */
 const btn_user = Array.from(document.querySelectorAll('.selection > div')) 
+console.log(btn_user)
 const signUp = document.querySelector('.user > .signup')
 const logIn = document.querySelector('.user > .loginFrame')
 const backs = Array.from(document.querySelectorAll('.back')) 
 const unLogin = document.querySelector('.user > .selection')
 const logined = document.querySelector('.user > .login-finish')
-let userdate
+
+ 
 
 
 /* 彈出登入/註冊的動作 */
@@ -95,19 +86,21 @@ let userdate
 btn_user.forEach((btn) => {
     
     btn.addEventListener('click',function(){
-        let index = btn_user.indexOf(this)
-        console.log(index)
+        let index = btn_user.indexOf(this) //點選第幾個按鈕 0:登入 1:註冊
+        console.log(`第${index}個`)
         if(index != 0){
-            signUp.classList.remove('hidden-this')
-            }
-        logIn.classList.remove('hidden-this')
+            signUp.classList.remove('hidden-this')//不等於０會顯示註冊的畫面 
+            }else{
+                logIn.classList.remove('hidden-this') //等於０就顯示畫面
+            } 
+        
         btn_user_display()
         }
         
     )
 });
 
-backs.forEach((back) => {
+backs.forEach((back) => { //登入\註冊裡的返回鍵
     back.addEventListener('click',function(){
         let index = backs.indexOf(this)
         if(index != 0){
@@ -124,10 +117,10 @@ backs.forEach((back) => {
 /* ------彈出視窗的話隱藏按鈕 ---------------*/
 function btn_user_display(){
     if(signUp.classList.contains('hidden-this') && logIn.classList.contains('hidden-this')){
-        
+        //如果兩個面板都是關閉的，那麼登入和註冊都會顯示。
         btn_user[0].classList.remove('hidden-this')
         btn_user[1].classList.remove('hidden-this')
-    } else {
+    } else{
         
         btn_user[0].classList.add('hidden-this')
         btn_user[1].classList.add('hidden-this')
@@ -138,35 +131,32 @@ function btn_user_display(){
 /**-------------創立帳號的行為-------------------- */
 function creatAccount() {
     console.log('update')
-    let NewsignUp = []
     let name = document.querySelector('.userInsert > div > .Name')
     let tel = document.querySelector('.userInsert > div > .Tel-Num')
-    let car = 0
+    let car = false
+
     if(name.value == '' && tel.value == ''){
         alert('請勿空白')
         return
         
     } else {
-    let carChecked =Array.from(document.querySelectorAll('.userInsert > div > input')) 
-    console.log(carChecked)
-    if(carChecked[2].checked == true) {
-        car = 1
-        console.log('可載人')
-    }
+        let carChecked =Array.from(document.querySelectorAll('.userInsert > div > input')) 
+        console.log(carChecked)
 
-    NewsignUp.push(name.value,tel.value,car)
-    
-    set(ref(db,'profile/'+NewsignUp[0]),{
-        'Name':NewsignUp[0],
-        'Tel':NewsignUp[1],
-        'car':car,
-        'active':''
-    })
+        if(carChecked[2].checked == true) {
+            car = ture
+            console.log('可載人')
+        }
 
-    name.value = ''
-    tel.value = ''
-    console.log(name.value+'**'+tel.value)
-    car = 0
+        userDate.push({'userName':name.value,'tel':tel.value,'car':car})
+        alert('註冊成功 請重新登入')
+        console.log(userDate)
+
+        name.value = ''
+        tel.value = ''
+        console.log(name.value+'**'+tel.value)
+        car = false
+
     }
 }
 
@@ -201,8 +191,8 @@ function activeCheck(){
 
 
 const sendOutList = Array.from(document.querySelectorAll('.btn-send'))
-console.log("送出"+sendOutList)
 sendOutList.forEach((sendOut) => {
+
     sendOut.addEventListener('click',function(){
         let index = sendOutList.indexOf(this)
         
@@ -213,46 +203,50 @@ sendOutList.forEach((sendOut) => {
             /* 加載資料並解密對照 */
             let name = document.querySelector('.loginInsert > div > .Name').value
             let tel = document.querySelector('.loginInsert > div > .Tel-Num').value
-             
+            let boolen = []
             
-            get(child(dbref,'profile/'+name)).then((snapshot) => {
-                if(snapshot.exists()) {
-                    console.log(Object.values(snapshot.val()))
-                    let dateTel = Object.values(snapshot.val())[1]
-                    if ( tel !== dateTel ){
-                        return 0
-                    }
-                    
-                    userdate = Object.values(snapshot.val())
-                    console.log(userdate)
+            //先比對用戶姓名
+            for(let i=0;i<userDate.length;i++){
+                boolen.push(name == userDate[i].userName)
+            }
+            let index = boolen.indexOf(true)
+            if(index == -1){
+                alert('查無此人')
+                return
+                
+            } else {
+                //比對電話
+                if(userDate[index].tel == tel){
+                    alert('登入成功')
+                    userCookie.push(index,name,tel)
                     unLogin.classList.add('hidden-this')
                     logined.classList.remove('hidden-this')
                     logIn.classList.add('hidden-this')
                     document.querySelector('.login-finish > h2').textContent = 'Welcome！' + name
-                    console.log('目前資料：'+userdate)
-                    activeCheck()
-                }  else {
-                    alert('登入失敗')
+                   
+                    myPoliEven()
+                    //activeCheck() 
+                } else {
+                    alert('電話錯誤')
+                    return
                 }
-            })
-
-            return 0
-        } else {
-            console.log('註冊')
-            /*  送出申請資料  */
-            if(userdate[2] !== ''){
-        
-                return 0
-            } else {
-                alert('註冊成功 請重新登入')
             }
             
+
+        } else {
+            console.log('註冊')
+
+            /*  送出申請資料  */
+            creatAccount()
+            
+            
+            
         }
-        
+    })
         /* ---------------------------------------創建帳號----------------------------------------- */
 
 
-        creatAccount()
+        
         
 
         
@@ -266,7 +260,7 @@ sendOutList.forEach((sendOut) => {
         /* 執行ID加密 */
         
     })
-})
+
 
 
 /*-----------------參加活動------------------------------------------------------------------------------- */
@@ -282,19 +276,31 @@ function JoinActive(){
             console.log(list.indexOf(this))
             joinTitle = newsData[list.indexOf(this)].title
             userdate[2] = userdate[2] + joinTitle + ';'
-
-            set(ref(db,'profile/'+userdate[0]),{
-                'Name':userdate[0],
-                'Tel':userdate[1],
-                'car':userdate[3],
-                'active':userdate[2]
-            }) 
             alert('報名成功 請重新整理')
             console.log('檢查')
         })
     })
 
     
+}
+
+/*---------------- 已報名 --------------*/
+
+function myPoliEven(){
+    let creatlist = document.createElement('li')
+    let creatul = document.createElement('ul')
+    creatul.classList.add('myEven')
+    creatlist.innerHTML = '<h1>已報名的活動'
+    creatul.append(creatlist)
+
+    for(let i=0;i<userDate[userCookie[0]].even.length;i++){
+        let creatlist = document.createElement('li')
+       
+        creatlist.textContent = poliEven[userDate[userCookie[0]].even[i]]
+        creatul.append(creatlist)
+    }
     
     
+    document.querySelector('.container').appendChild(creatul)
+
 }
